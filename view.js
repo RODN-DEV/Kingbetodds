@@ -4,6 +4,12 @@ const View = {
         const container = document.getElementById(containerId);
         container.innerHTML = ''; // Clear previous content
 
+        // Check if data is loaded
+        if (typeof gamesData === 'undefined') {
+            container.innerHTML = '<div class="loader" style="color:red">Error: data.js not loaded.</div>';
+            return;
+        }
+
         const data = gamesData[categoryKey] || [];
 
         if (data.length === 0) {
