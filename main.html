@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINGS BET ODDS</title>
+    <!-- Lightweight Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="hamburger" id="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        
+        <div class="logo">
+            <i data-lucide="crown" style="color: #f59e0b;"></i>
+            Kings<span>Bet</span>Odds
+        </div>
+
+        <div class="header-icons">
+            <button class="icon-btn" onclick="toggleModal('privacyModal')">
+                <i data-lucide="shield-check" size="22"></i>
+            </button>
+            <button class="icon-btn">
+                <i data-lucide="bell" size="22"></i>
+                <div class="notif-badge"></div>
+            </button>
+        </div>
+    </header>
+
+    <!-- Side Navigation Overlay -->
+    <div class="nav-overlay" id="navOverlay">
+        <div style="margin-bottom: 20px; font-weight: 800; font-size: 1.5rem;">Menu</div>
+        <a href="#" class="nav-item" onclick="switchCategory('topSecret'); closeMenu();">
+            <i data-lucide="lock" size="20"></i> Top Secret VIP
+        </a>
+        <a href="#" class="nav-item" onclick="switchCategory('ultimate'); closeMenu();">
+            <i data-lucide="crown" size="20"></i> Ultimate VIP
+        </a>
+        <a href="#" class="nav-item" onclick="switchCategory('overUnder'); closeMenu();">
+            <i data-lucide="arrow-up-down" size="20"></i> Over/Under
+        </a>
+        <a href="#" class="nav-item" onclick="toggleModal('privacyModal'); closeMenu();">
+            <i data-lucide="file-text" size="20"></i> Privacy Policy
+        </a>
+        <div style="margin-top: auto; font-size: 0.8rem; color: #94a3b8;">
+            v2.0.1 Kings Bet
+        </div>
+    </div>
+
+    <!-- Live Animation Hero -->
+    <div class="animation-container">
+        <div class="field-line"></div>
+        <div class="kicker-wrapper">
+            <svg class="player-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="4" r="3" />
+                <path d="M12 7v5l-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M12 12l-2 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M12 12l2 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <div class="ball"></div>
+        </div>
+        <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; color: #fff; font-size: 0.7rem; font-weight: bold;">
+            <span style="display:inline-block; width: 6px; height: 6px; background: #ef4444; border-radius: 50%; margin-right: 4px;"></span> LIVE
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <h2 class="section-title">Choose Your Games</h2>
+
+        <!-- Square 2-Column Tabs -->
+        <div class="category-grid">
+            <div class="cat-card active" onclick="switchCategory('topSecret', this)">
+                <div class="cat-icon"><i data-lucide="lock"></i></div>
+                <div class="cat-title">Top Secret</div>
+            </div>
+            <div class="cat-card" onclick="switchCategory('ultimate', this)">
+                <div class="cat-icon"><i data-lucide="gem"></i></div>
+                <div class="cat-title">Ultimate</div>
+            </div>
+            <div class="cat-card" onclick="switchCategory('free', this)">
+                <div class="cat-icon"><i data-lucide="gift"></i></div>
+                <div class="cat-title">Free Tips</div>
+            </div>
+            <div class="cat-card" onclick="switchCategory('btts', this)">
+                <div class="cat-icon"><i data-lucide="repeat"></i></div>
+                <div class="cat-title">BTTS</div>
+            </div>
+        </div>
+
+        <h3 class="section-title" id="currentCategoryTitle">Top Secret Games</h3>
+        
+        <div id="gamesContainer" class="games-list">
+            <!-- Games injected here -->
+            <div class="loader">Loading games...</div>
+        </div>
+
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section">
+        <h3 class="section-title">Contact Support</h3>
+        
+        <div class="contact-row">
+            <div class="contact-icon icon-tg"><i data-lucide="send"></i></div>
+            <div class="contact-info">
+                <p>Telegram Admin</p>
+                <a href="https://t.me/v2_0x1" target="_blank">@v2_0x1</a>
+            </div>
+        </div>
+
+        <div class="contact-row">
+            <div class="contact-icon icon-wa"><i data-lucide="phone"></i></div>
+            <div class="contact-info">
+                <p>WhatsApp</p>
+                <a href="https://wa.me/+256745430208" target="_blank">+256 745 430 208</a>
+            </div>
+        </div>
+
+        <div class="contact-row">
+            <div class="contact-icon icon-em"><i data-lucide="mail"></i></div>
+            <div class="contact-info">
+                <p>Email Support</p>
+                <a href="mailto:rapturetechrodney@gmail.com">rapturetechrodney@gmail.com</a>
+            </div>
+        </div>
+
+        <div class="contact-row" style="margin-top: 10px; background: #f0f9ff; padding: 10px; border-radius: 10px;">
+            <div class="contact-info" style="width: 100%; text-align: center;">
+                <p>Join Main Channel</p>
+                <a href="https://t.me/dailyoddsman1" style="color: #0088cc;">t.me/dailyoddsman1</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('privacyModal')">&times;</span>
+            <h3>Privacy Policy</h3>
+            <p style="margin-top: 10px; font-size: 0.9rem; line-height: 1.5; color: #64748b;">
+                At Kings Bet Odds, we value your privacy. We do not collect personal data without consent. 
+                All betting tips are for informational purposes only. Please gamble responsibly.
+                <br><br>
+                For data deletion requests, contact support.
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="View.js"></script>
+    <script src="Script.js"></script>
+</body>
+</html>
+
