@@ -1,64 +1,64 @@
-// Initialize Lucide Icons on load
-if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-}
+// Initialize Icons
+lucide.createIcons();
 
-// Element References
+// --- ROUTER SYSTEM ---
+const router = {
+    // Navigate to Game Page
+    goPage: function(category) {
+        // 1. Populate Data
+        View.renderGames(category);
+        View.updateTitle(category);
+
+        // 2. Slide In Animation
+        document.getElementById('view-games').classList.remove('translate-x-full');
+        document.getElementById('view-games').classList.add('translate-x-0');
+        
+        // 3. Helper: Close other views
+        document.getElementById('view-support').classList.add('translate-x-full');
+    },
+
+    // Navigate Home
+    goHome: function() {
+        // Slide Out All Overlays
+        document.getElementById('view-games').classList.add('translate-x-full');
+        document.getElementById('view-games').classList.remove('translate-x-0');
+        
+        document.getElementById('view-support').classList.add('translate-x-full');
+        document.getElementById('view-support').classList.remove('translate-x-0');
+    },
+
+    // Navigate Support
+    goSupport: function() {
+        document.getElementById('view-support').classList.remove('translate-x-full');
+        document.getElementById('view-support').classList.add('translate-x-0');
+        
+        // Close others
+        document.getElementById('view-games').classList.add('translate-x-full');
+    }
+};
+
+// --- MENU SYSTEM ---
 const hamburger = document.getElementById('hamburger');
 const navOverlay = document.getElementById('navOverlay');
 
-// 1. Initial Load
-window.addEventListener('DOMContentLoaded', () => {
-    // Check if view logic is loaded
-    if (typeof View !== 'undefined') {
-        switchCategory('topSecret');
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    
+    // Toggle Slide
+    if (navOverlay.classList.contains('-translate-x-full')) {
+        navOverlay.classList.remove('-translate-x-full');
     } else {
-        console.error("View.js is not loaded");
-        document.getElementById('gamesContainer').innerHTML = "Error loading application logic.";
+        navOverlay.classList.add('-translate-x-full');
     }
 });
 
-// 2. Navigation Logic
-function switchCategory(categoryKey, element) {
-    if (typeof View === 'undefined') return;
-    
-    // Call View methods to update UI
-    View.updateTabs(element);
-    View.updateTitle(categoryKey);
-    View.renderGames(categoryKey, 'gamesContainer');
-}
-
-// 3. Hamburger Menu Spiral Logic
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navOverlay.classList.toggle('open');
-    });
-}
-
 function closeMenu() {
     hamburger.classList.remove('active');
-    navOverlay.classList.remove('open');
+    navOverlay.classList.add('-translate-x-full');
 }
 
-// 4. Modal Logic (Privacy Policy)
-function toggleModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-    }
-}
-
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Close modal when clicking outside content
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = "none";
-    }
-}
+// Initial Load
+window.addEventListener('DOMContentLoaded', () => {
+    // Ensure all views are reset
+    router.goHome();
+});
