@@ -1,87 +1,80 @@
 const View = {
-    // Render the list of games into the container
-    renderGames: function(categoryKey, containerId) {
-        const container = document.getElementById(containerId);
-        container.innerHTML = ''; // Clear previous content
+    updateTitle: function(category) {
+        const titles = {
+            topSecret: "Top Secret VIP",
+            ultimate: "Ultimate VIP",
+            free: "Free Daily Tips",
+            overUnder: "Over/Under Picks",
+            btts: "BTTS / GG"
+        };
+        document.getElementById('page-title').innerText = titles[category] || "Games";
+    },
 
-        // Check if data is loaded
-        if (typeof gamesData === 'undefined') {
-            container.innerHTML = '<div class="loader" style="color:red">Error: data.js not loaded.</div>';
+    renderGames: function(category) {
+        const container = document.getElementById('games-container');
+        container.innerHTML = ''; // Clear
+
+        if (!gamesData || !gamesData[category]) {
+            container.innerHTML = '<div class="text-center text-slate-400 mt-10">No games available</div>';
             return;
         }
 
-        const data = gamesData[categoryKey] || [];
+        const games = gamesData[category];
 
-        if (data.length === 0) {
-            container.innerHTML = '<div class="loader">No games available currently.</div>';
-            return;
-        }
-
-        // Build HTML string
-        const gamesHTML = data.map(game => {
-            // Determine confidence color
-            const confVal = parseInt(game.confidence);
-            let confColor = '#f59e0b'; // Default orange
-            if (confVal > 85) confColor = '#10b981'; // Green
-            else if (confVal > 75) confColor = '#3b82f6'; // Blue
+        const html = games.map(game => {
+            // Logic for styling based on confidence
+            const conf = parseInt(game.confidence);
+            let barColor = 'bg-amber-500';
+            let textColor = 'text-amber-600';
+            
+            if(conf > 85) {
+                barColor = 'bg-emerald-500';
+                textColor = 'text-emerald-600';
+            } else if (conf > 75) {
+                barColor = 'bg-blue-500';
+                textColor = 'text-blue-600';
+            }
 
             return `
-            <div class="game-card">
-                <div class="league-info">
-                    <span><i data-lucide="trophy" style="width:12px; height:12px; display:inline;"></i> ${game.league}</span>
-                    <span>${game.time} • ${game.date}</span>
-                </div>
-                
-                <div class="match-row">
-                    <div class="team">${game.teamA}</div>
-                    <span class="vs">VS</span>
-                    <div class="team away">${game.teamB}</div>
-                </div>
-
-                <div class="prediction-box">
-                    <div class="pred-text">
-                        <span class="pred-label">Prediction</span>
-                        <span class="pred-value">${game.prediction}</span>
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 relative">
+                <!-- Header: League & Time -->
+                <div class="flex justify-between items-center mb-4 text-xs font-semibold text-slate-400 uppercase tracking-wide border-b border-slate-50 pb-2">
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="trophy" class="w-3 h-3"></i> ${game.league}
                     </div>
-                    <div class="odds-badge">${game.odds}</div>
+                    <div>${game.time}</div>
                 </div>
 
-                <div class="confidence-meter">
-                    <div class="confidence-fill" style="width: ${game.confidence}; background: ${confColor}"></div>
+                <!-- Teams -->
+                <div class="flex justify-between items-center mb-4">
+                    <div class="text-sm font-bold text-slate-800 w-1/3 break-words">${game.teamA}</div>
+                    <div class="px-3 py-1 bg-slate-100 rounded text-xs font-bold text-slate-500">VS</div>
+                    <div class="text-sm font-bold text-slate-800 w-1/3 text-right break-words">${game.teamB}</div>
                 </div>
-                <div style="text-align: right; font-size: 0.7rem; margin-top: 4px; color: ${confColor}; font-weight: bold;">
-                    ${game.confidence} Confidence
+
+                <!-- Prediction Block -->
+                <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center mb-3">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Prediction</span>
+                        <span class="font-bold text-slate-900 text-sm">${game.prediction}</span>
+                    </div>
+                    <div class="bg-slate-900 text-white px-3 py-1.5 rounded-lg font-bold text-sm shadow-lg shadow-slate-300">
+                        ${game.odds}
+                    </div>
+                </div>
+
+                <!-- Footer: Confidence -->
+                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="${barColor} h-full" style="width: ${game.confidence}"></div>
+                </div>
+                <div class="text-right text-[10px] font-bold ${textColor} mt-1">
+                    ${game.confidence} Probability
                 </div>
             </div>
             `;
         }).join('');
 
-        container.innerHTML = gamesHTML;
-        
-        // Re-initialize icons since we added new DOM elements
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-    },
-
-    // Update the Section Title
-    updateTitle: function(categoryKey) {
-        const titleElement = document.getElementById('currentCategoryTitle');
-        const titles = {
-            topSecret: "Top Secret VIP",
-            ultimate: "Ultimate VIP",
-            free: "Daily Free Tips",
-            overUnder: "Over/Under VIP",
-            btts: "Both Teams To Score"
-        };
-        titleElement.innerText = titles[categoryKey] || "Games";
-    },
-
-    // Update active state of tabs
-    updateTabs: function(element) {
-        if (!element) return;
-        const cards = document.querySelectorAll('.cat-card');
-        cards.forEach(card => card.classList.remove('active'));
-        element.classList.add('active');
+        container.innerHTML = html;
+        lucide.createIcons(); // Refresh icons
     }
 };
