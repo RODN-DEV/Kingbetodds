@@ -9,12 +9,19 @@ const navOverlay = document.getElementById('navOverlay');
 
 // 1. Initial Load
 window.addEventListener('DOMContentLoaded', () => {
-    // Load default category
-    switchCategory('topSecret');
+    // Check if view logic is loaded
+    if (typeof View !== 'undefined') {
+        switchCategory('topSecret');
+    } else {
+        console.error("View.js is not loaded");
+        document.getElementById('gamesContainer').innerHTML = "Error loading application logic.";
+    }
 });
 
 // 2. Navigation Logic
 function switchCategory(categoryKey, element) {
+    if (typeof View === 'undefined') return;
+    
     // Call View methods to update UI
     View.updateTabs(element);
     View.updateTitle(categoryKey);
